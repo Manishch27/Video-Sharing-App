@@ -6,7 +6,17 @@ dotenv.config({
 })
 
 
-connectDB()
+connectDB().then(()=>{
+    app.on(err =>{
+        console.log("error in connecting with the express server",err);
+        throw err;
+    })
+    app.listen(process.env.PORT || 8080, ()=>{
+        console.log("app is listening on port", process.env.PORT)
+    });
+}).catch((err)=>{
+    console.log("Database connection failed!", err);
+})
 
 
 
